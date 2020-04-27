@@ -11,9 +11,15 @@ passport.use(
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return done(err, user);
-      });
+      // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      //   return done(err, user);
+      // });
+      if (profile) {
+        user = profile;
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
     }
   )
 );
